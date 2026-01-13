@@ -78,4 +78,5 @@ secrets.yaml
 # --- 日志文件 (Logs) ---
 *.log
 
-output_test.jpg
+output
+logs

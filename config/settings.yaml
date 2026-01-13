@@ -1,0 +1,5 @@
+default_model: "qwen3-vl:32b-instruct-q4_K_M"
+log_file: "logs/experiments.jsonl"
+prompts_dir: "prompts"
+output_dir: "output"
+show_latency: true
