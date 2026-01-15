@@ -44,16 +44,6 @@ def draw_on_image(img: np.ndarray, boxes: List[List[int]], labels: List[str] = N
             # Draw box
             cv2.rectangle(img, (px_x1, px_y1), (px_x2, px_y2), bgr_color, width)
             
-            label_text = labels[i] if labels and i < len(labels) else f"Object {i+1}"
-            
-            # Draw label background
-            (text_w, text_h), baseline = cv2.getTextSize(label_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
-            cv2.rectangle(img, (px_x1, px_y1 - text_h - 5), (px_x1 + text_w, px_y1), bgr_color, -1)
-            
-            # Draw label
-            cv2.putText(img, label_text, (px_x1, px_y1 - 5), 
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-            
     return img
 
 def draw_bounding_boxes(image_source: Union[str, Path, np.ndarray], boxes: List[List[int]], 
