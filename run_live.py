@@ -15,20 +15,12 @@ def main():
     config = load_config()
     
     parser = argparse.ArgumentParser(description="Ollama VLM - Live Detection Mode")
-    parser.add_argument("--target", type=str, help="Target object description (optional)")
-
     args = parser.parse_args()
     
-    # Use CLI target if provided, otherwise interactive
-    target_object = args.target
-
     print("\n=== Live Detection Configuration ===")
     print(f"Model: {config.get('default_model', 'qwen3-vl')}")
     print(f"Template: {config.get('template', 'standard_detection.v2')}")
-    if target_object:
-        print(f"Target: {target_object}")
-    else:
-        print("Target: [Interactive Input]")
+    print("Target: [Interactive Input]")
     print("====================================\n")
 
     # Ensure logs directory exists
