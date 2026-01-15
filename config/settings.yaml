@@ -1,9 +1,11 @@
 default_model: "qwen3-vl:32b-instruct-q4_K_M" # qwen3-vl:8b-instruct-q4_K_M, qwen3-vl:32b-instruct-q4_K_M
+template: "standard_detection.v2"
+
 log_file: "logs/experiments.jsonl"
 prompts_dir: "prompts"
 output_dir: "output"
 show_latency: true
-max_image_width: 320
+max_image_width: 640
 camera:
   width: 1280
   height: 720
