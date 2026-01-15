@@ -23,14 +23,10 @@ def main():
     print("Target: [Interactive Input]")
     print("====================================\n")
 
-    # Ensure logs directory exists
-    Path("logs").mkdir(exist_ok=True)
-    
     app = LiveDetectionApp(
         model_name=config.get("default_model", "qwen3-vl"),
         template_name=config.get("template", "standard_detection.v2"),
         prompts_dir=config.get("prompts_dir", "prompts"),
-        log_file=config.get("log_file", "logs/experiments.jsonl"),
         camera_config=config.get("camera", {}),
         visualization_config=config.get("visualization", {}),
         max_image_width=config.get("max_image_width", 640),

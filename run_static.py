@@ -43,7 +43,6 @@ def main():
         model_name=config.get("default_model", "qwen3-vl"),
         template_name=config.get("template", "standard_detection.v2"),
         prompts_dir=config.get("prompts_dir", "prompts"),
-        log_file=config.get("log_file", "logs/experiments.jsonl"),
         visualization_config=config.get("visualization", {})
     )
     

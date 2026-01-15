@@ -11,7 +11,6 @@ from src.core.prompt_manager import PromptManager
 from src.parsers.bbox_parser import BoundingBoxParser
 from src.core.detector import ObjectDetector
 from src.utils.image_utils import draw_on_image
-from src.utils.logger import ExperimentLogger
 from src.utils.camera import RealSenseCamera
 
 class LiveDetectionApp:
@@ -19,7 +18,6 @@ class LiveDetectionApp:
                  model_name: str, 
                  template_name: str,
                  prompts_dir: str = "prompts",
-                 log_file: str = "logs/experiments.jsonl",
                  camera_config: dict = None,
                  visualization_config: dict = None,
                  max_image_width: Union[int, str] = 640,
@@ -28,7 +26,6 @@ class LiveDetectionApp:
         self.model_name = model_name
         self.template_name = template_name
         self.prompts_dir = prompts_dir
-        self.log_file = log_file
         self.camera_config = camera_config or {}
         self.visualization_config = visualization_config or {}
         self.max_image_width = max_image_width
@@ -44,7 +41,6 @@ class LiveDetectionApp:
         self.prompt_manager = PromptManager(prompt_dir=self.prompts_dir)
         self.bbox_parser = BoundingBoxParser()
         self.detector = ObjectDetector(self.llm_client, self.bbox_parser)
-        self.logger = ExperimentLogger(log_file=self.log_file)
 
     def run_detection_in_memory(self, image_np: np.ndarray, target_object: str):
         """
@@ -71,15 +67,6 @@ class LiveDetectionApp:
         # Execute Pipeline with Bytes
         print("Running detector...")
         result = self.detector.run(img_bytes, prompt)
-
-        # Log
-        result['model'] = self.model_name
-        result['template_key'] = self.template_name
-        result['target'] = target_object
-        result['image_source'] = "memory_capture"
-        
-        self.logger.log(result)
-
         
         print("-" * 30)
         print("Raw Response:")

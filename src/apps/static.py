@@ -8,20 +8,17 @@ from src.core.prompt_manager import PromptManager
 from src.parsers.bbox_parser import BoundingBoxParser
 from src.core.detector import ObjectDetector
 from src.utils.image_utils import draw_bounding_boxes
-from src.utils.logger import ExperimentLogger
 
 class StaticDetectionApp:
     def __init__(self, 
                  model_name: str, 
                  template_name: str = "standard_detection.v2",
                  prompts_dir: str = "prompts",
-                 log_file: str = "logs/experiments.jsonl",
                  visualization_config: dict = None):
 
         self.model_name = model_name
         self.template_name = template_name
         self.prompts_dir = prompts_dir
-        self.log_file = log_file
         self.visualization_config = visualization_config or {}
 
         self._init_components()
@@ -33,7 +30,6 @@ class StaticDetectionApp:
         self.prompt_manager = PromptManager(prompt_dir=self.prompts_dir)
         self.bbox_parser = BoundingBoxParser()
         self.detector = ObjectDetector(self.llm_client, self.bbox_parser)
-        self.logger = ExperimentLogger(log_file=self.log_file)
 
     def run(self, image_path: str, target_object: str, output_path: str = None):
         image_path = Path(image_path)
@@ -59,15 +55,6 @@ class StaticDetectionApp:
         # Run Detector (pass path directly)
         result = self.detector.run(str(image_path), prompt)
 
-        # Log
-        result['model'] = self.model_name
-        result['template_key'] = self.template_name
-        result['target'] = target_object
-        result['image_path'] = str(image_path)
-        
-        self.logger.log(result)
-
-        
         # Output
         print("-" * 30)
         print("Raw Response:")
